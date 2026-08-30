@@ -2,7 +2,77 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+  
+    @@keyframes pulse-glow {
+        0%
+
+    {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.7), 0 0 30px rgba(236, 72, 153, 0.5);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(255, 20, 147, 0.9), 0 0 60px rgba(244, 114, 182, 0.8), 0 0 90px rgba(192, 132, 252, 0.6);
+        transform: scale(1.04);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.7), 0 0 30px rgba(236, 72, 153, 0.5);
+        transform: scale(1);
+    }
+
+    }
+
+    @@keyframes card-glow {
+        0%, 100% {
+            box-shadow: 0 0 25px rgba(244, 114, 182, 0.4), 0 0 50px rgba(192, 132, 252, 0.2);
+        }
+
+        50% {
+            box-shadow: 0 0 40px rgba(244, 114, 182, 0.6), 0 0 70px rgba(192, 132, 252, 0.4);
+        }
+    }
+
+    .girly-card {
+        background: linear-gradient(145deg, #1e112a, #321742);
+        border: 2px solid rgba(244, 114, 182, 0.3);
+        animation: card-glow 4s infinite ease-in-out;
+        backdrop-filter: blur(10px);
+    }
+
+    .girly-title {
+        color: #fbcfe8;
+        font-family: 'Poppins', 'Segoe UI', sans-serif;
+        text-shadow: 0 0 10px rgba(244, 114, 182, 0.8), 0 0 20px rgba(217, 70, 239, 0.6);
+        letter-spacing: 1px;
+    }
+
+    .sos-glow-btn {
+        animation: pulse-glow 1.8s infinite ease-in-out;
+        background: linear-gradient(135deg, #ff2a85, #ec4899, #a855f7);
+        border: 2px solid #fff;
+        color: #ffffff !important;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+        .sos-glow-btn:hover {
+            transform: scale(1.08) translateY(-2px);
+            color: #ffffff !important;
+            box-shadow: 0 0 40px rgba(255, 42, 133, 1), 0 0 80px rgba(168, 85, 247, 0.8);
+        }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="text-center py-5 px-4 rounded-5 w-100 girly-card" style="max-width: 600px;">
+        <h1 class="display-4 fw-bold mb-3 girly-title">Welcome </h1>
+
+        <div class="mt-4">
+            <a asp-controller="Emergency" asp-action="SOS" class="btn btn-lg rounded-pill fw-bold px-5 py-3 sos-glow-btn">
+                 Get Emergency Support (SOS) 
+            </a>
+        </div>
+    </div>
 </div>

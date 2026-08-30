@@ -1,0 +1,349 @@
+﻿@{
+    ViewData["Title"] = "Period Empowerment & Learning";
+}
+
+@section Styles {
+    <style>
+        .learn-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #ffe8ec 0%, #ffd1dc 100%);
+            border-radius: 24px;
+            padding: 28px 20px;
+            border: 2px solid #ffccd5;
+        }
+
+        /* Compact Video Section */
+        .video-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 2px solid #ffccd5;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.1);
+            max-width: 680px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            background-color: #000;
+        }
+
+            .video-container video {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+        /* Flashcard 3D Flip Effects */
+        .flashcard-wrapper {
+            perspective: 1000px;
+            height: 220px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            cursor: pointer;
+        }
+
+            .flashcard-wrapper:hover .flashcard,
+            .flashcard.is-flipped {
+                transform: rotateY(180deg);
+            }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #ffccd5;
+        }
+
+        .flashcard-front {
+            background: #fff0f3;
+            color: #d90429;
+        }
+
+        .flashcard-back {
+            background: #ffffff;
+            color: #2b2d42;
+            transform: rotateY(180deg);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15);
+        }
+
+        .badge-empower {
+            background-color: #ff4d6d;
+            color: white;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        .nav-pills .nav-link {
+            color: #ff4d6d;
+            font-weight: bold;
+        }
+
+        .edu-card {
+            border-radius: 16px;
+            border: 1px solid #ffccd5;
+            transition: transform 0.2s ease;
+        }
+
+            .edu-card:hover {
+                transform: translateY(-3px);
+            }
+    </style>
+}
+
+<div class="container learn-container my-4">
+
+    <!-- Hero Header -->
+    <div class="hero-banner text-center mb-4">
+        <span class="badge badge-empower mb-2">🌸 Safe Space &amp; Education</span>
+        <h1 class="fw-bold text-danger mb-1">Periods are Powerful &amp; Natural 💕</h1>
+        <p class="fs-6 text-dark mb-0">
+            There is zero shame in having a period. Tap the flashcards below to debunk myths, watch educational videos, and learn about your cycle!
+        </p>
+    </div>
+
+    <!-- Compact Educational Video Player -->
+    <div class="mb-5">
+        <div class="video-card">
+            <div class="p-2 bg-white border-bottom border-pink text-center">
+                <h6 class="fw-bold text-danger mb-0">🎬 Educational Video Hub</h6>
+            </div>
+
+            <div class="p-2 bg-light">
+                <ul class="nav nav-pills nav-justified btn-sm" id="videoTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active py-1 small" id="stigma-tab" data-bs-toggle="tab" data-bs-target="#stigma-video" type="button" role="tab">
+                            💔 Ending Stigma
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link py-1 small" id="expect-tab" data-bs-toggle="tab" data-bs-target="#expect-video" type="button" role="tab">
+                            🩸 What to Expect
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="videoTabContent">
+                <div class="tab-pane fade show active" id="stigma-video" role="tabpanel">
+                    <div class="video-container">
+                        <video controls preload="metadata">
+                            <source src="~/Videos/video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="expect-video" role="tabpanel">
+                    <div class="video-container">
+                        <video controls preload="metadata">
+                            <source src="~/Videos/video2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Myth Busters Flashcards Grid -->
+    <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold text-dark mb-0">🎴 Interactive Myth Busters Flashcards</h4>
+            <span class="text-muted small">Hover or tap card to reveal the fact 🔄</span>
+        </div>
+
+        <div class="row g-3">
+            <!-- Flashcard 1 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #1</span>
+                            <h6 class="fw-bold">"Period blood is dirty blood."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Period blood is normal body blood and tissue shed from the uterine lining. It is completely clean!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 2 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #2</span>
+                            <h6 class="fw-bold">"You must stay home while bleeding."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">You can safely study, swim, play sports, and go to school comfortably with proper hygiene products.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 3 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #3</span>
+                            <h6 class="fw-bold">"Tampons cause virginity loss."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Virginity is about sexual activity. Using tampons or menstrual cups is purely a hygienic choice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 4 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #4</span>
+                            <h6 class="fw-bold">"Showering worsens menstrual flow."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Warm water actually relaxes pelvic muscles and reduces cramps. Hygiene during periods is essential!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 5 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #5</span>
+                            <h6 class="fw-bold">"Every cycle must be 28 days."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Healthy cycles range between 21 and 35 days. Irregularity is also common, especially in teens.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 6 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #6</span>
+                            <h6 class="fw-bold">"Cold food causes worse cramps."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Dietary cold drinks don't trigger cramps. Cramps are caused by natural uterine muscle contractions (prostaglandins).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 7 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #7</span>
+                            <h6 class="fw-bold">"You lose cups of blood each month."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">The average total blood loss during an entire period is only around 2 to 3 tablespoons (30 to 50 ml)!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard 8 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-front">
+                            <span class="badge bg-danger mb-2">❌ MYTH #8</span>
+                            <h6 class="fw-bold">"Talking about periods is shameful."</h6>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="badge bg-success mb-2">✅ FACT</span>
+                            <p class="small mb-0">Open conversations break stigma, promote health awareness, and save lives through early diagnosis!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Educational Resource Cards -->
+    <h4 class="fw-bold text-dark mb-3">📚 Essential Period Guides</h4>
+    <div class="row g-3 mb-5">
+        <div class="col-md-6">
+            <div class="edu-card bg-white p-4 h-100 shadow-sm">
+                <h5 class="fw-bold text-danger mb-2">🔄 The 4 Phases of Your Cycle</h5>
+                <ul class="list-unstyled mb-0 small text-secondary">
+                    <li class="mb-2">🩸 <strong>Menstrual Phase (Days 1–5):</strong> The lining sheds. Rest and stay hydrated.</li>
+                    <li class="mb-2">🌱 <strong>Follicular Phase (Days 6–14):</strong> Estrogen rises, boosting your energy and mood.</li>
+                    <li class="mb-2">🥚 <strong>Ovulation Phase (Day 14):</strong> Peak fertility as the egg is released.</li>
+                    <li class="mb-0">🌙 <strong>Luteal Phase (Days 15–28):</strong> Progesterone rises; mild PMS symptoms may occur.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="edu-card bg-white p-4 h-100 shadow-sm">
+                <h5 class="fw-bold text-danger mb-2">🧼 Best Practices for Hygiene</h5>
+                <ul class="list-unstyled mb-0 small text-secondary">
+                    <li class="mb-2">🕒 <strong>Change Products:</strong> Change pads every 4–6 hours (tampons every 4–8 hrs).</li>
+                    <li class="mb-2">💧 <strong>Gentle Cleaning:</strong> Clean the external area with plain warm water. Avoid harsh soaps.</li>
+                    <li class="mb-2">🌱 <strong>Eco-Friendly Disposals:</strong> Wrap used products in paper before putting them in waste bins.</li>
+                    <li class="mb-0">🧺 <strong>Breathable Fabrics:</strong> Wear clean, breathable cotton underwear for comfort.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encouragement Box -->
+    <div class="text-center p-4 bg-white rounded-4 border border-pink shadow-sm mb-4">
+        <h4 class="fw-bold text-danger mb-2">💖 You've Got This!</h4>
+        <p class="text-muted mb-3">Never let anyone make you feel bad about a normal body function.</p>
+        <a asp-controller="Emergency" asp-action="SOS" class="btn btn-danger rounded-pill fw-bold px-4">
+            🚨 Need Free Pads Urgently? Click Here for SOS
+        </a>
+    </div>
+
+</div>

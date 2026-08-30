@@ -6,13 +6,247 @@
     <title>@ViewData["Title"] - FreeFlow</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sos-style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FreeFlow.styles.css" asp-append-version="true" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Render Styles Section -->
+    @await RenderSectionAsync("Styles", required: false)
+
+    <style>
+        :root {
+            --pink-hot: #ff2a85;
+            --pink-soft: #ec4899;
+            --pink-light: #fbcfe8;
+            --pink-subtle: #fdf2f8;
+            --purple-deep: #1e112a;
+            --purple-mid: #321742;
+            --purple-glow: #a855f7;
+            --ink: #331832;
+            --ink-soft: #705273;
+            --sos-red: #ff3b5c;
+            --sos-glow: rgba(255, 59, 92, 0.6);
+            --glow-pink: rgba(255, 42, 133, 0.45);
+            --glow-purple: rgba(168, 85, 247, 0.45);
+        }
+
+        body {
+            font-family: 'Poppins', 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #13091c 0%, #251033 50%, #381545 100%);
+            color: #fce7f3;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* ---------- Navbar ---------- */
+        .navbar {
+            padding-top: 14px;
+            padding-bottom: 14px;
+            background: rgba(30, 17, 42, 0.75) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(244, 114, 182, 0.25) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(236, 72, 153, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(100deg, #ff75c3, #ffa647, #ffe600, #9fff5b, #70e2ff, #cd93ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            animation: shine 4s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.6));
+        }
+
+        @@keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--pink-hot), var(--purple-glow));
+            box-shadow: 0 0 15px var(--glow-pink), 0 0 25px var(--glow-purple);
+            flex-shrink: 0;
+            animation: brand-pulse 2s infinite ease-in-out;
+        }
+
+        @@keyframes brand-pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 12px var(--glow-pink);
+            }
+
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 22px var(--glow-pink), 0 0 30px var(--glow-purple);
+            }
+        }
+
+        .brand-mark svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+
+        .navbar-nav {
+            gap: 6px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #fbcfe8 !important;
+            padding: 8px 16px !important;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            text-shadow: 0 0 5px rgba(244, 114, 182, 0.3);
+        }
+
+            .nav-link svg {
+                width: 18px;
+                height: 18px;
+                stroke: #f472b6;
+                fill: none;
+                stroke-width: 2;
+                flex-shrink: 0;
+                transition: transform 0.2s ease;
+            }
+
+            .nav-link:hover {
+                color: #ffffff !important;
+                background: rgba(236, 72, 153, 0.25);
+                box-shadow: 0 0 15px rgba(236, 72, 153, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+            }
+
+                .nav-link:hover svg {
+                    transform: scale(1.15) rotate(5deg);
+                    stroke: #ffffff;
+                }
+
+            .nav-link.fw-bold {
+                color: #fff !important;
+            }
+
+        .nav-link-sos {
+            color: #ff758c !important;
+            font-weight: 600;
+            border: 1px solid rgba(255, 59, 92, 0.4);
+            background: rgba(255, 59, 92, 0.1);
+            box-shadow: 0 0 10px rgba(255, 59, 92, 0.2);
+        }
+
+            .nav-link-sos:hover {
+                color: #ffffff !important;
+                background: var(--sos-red);
+                box-shadow: 0 0 20px var(--sos-glow), 0 0 30px var(--sos-glow);
+                border-color: #ff758c;
+            }
+
+        .nav-link-accent {
+            color: #e879f9 !important;
+            border: 1px solid rgba(232, 121, 249, 0.3);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+            .nav-link-accent:hover {
+                color: #ffffff !important;
+                background: rgba(168, 85, 247, 0.4);
+                box-shadow: 0 0 20px var(--glow-purple);
+            }
+
+        /* ---------- Buttons ---------- */
+        .btn-violet, .btn-pink {
+            background: linear-gradient(135deg, var(--pink-hot), var(--purple-glow));
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 0 15px var(--glow-pink), 0 0 25px var(--glow-purple);
+            transition: all 0.25s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+            .btn-violet:hover, .btn-pink:hover {
+                transform: translateY(-2px) scale(1.02);
+                box-shadow: 0 0 25px var(--glow-pink), 0 0 40px var(--glow-purple), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+
+        .btn-sos {
+            background: linear-gradient(135deg, #ff2a85, var(--sos-red));
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 0 20px var(--sos-glow);
+            transition: all 0.25s ease;
+        }
+
+            .btn-sos:hover {
+                transform: translateY(-2px) scale(1.03);
+                box-shadow: 0 0 35px var(--sos-glow), 0 0 50px rgba(255, 42, 133, 0.8);
+            }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: rgba(20, 10, 30, 0.85);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(244, 114, 182, 0.25) !important;
+            padding: 14px 0;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #fbcfe8 !important;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-mark {
+            color: #ff75c3;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 117, 195, 0.6);
+        }
+
+        footer a {
+            color: #f472b6 !important;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+            footer a:hover {
+                color: #ffffff !important;
+                text-shadow: 0 0 8px #f472b6;
+            }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FreeFlow</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="brand-mark">
+                        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-5.2-10-9.5C.3 7.8 2.6 4 6.4 4c2 0 3.6 1 5.6 3 2-2 3.6-3 5.6-3 3.8 0 6.1 3.8 4.4 7.5C19.5 15.8 12 21 12 21z" /></svg>
+                    </span>
+                    FreeFlow ✨
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,28 +254,57 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8" /><path d="M5 10v10h14V10" /></svg>
+                                Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link nav-link-sos" asp-area="" asp-controller="Emergency" asp-action="SOS">
+                                <svg viewBox="0 0 24 24"><path d="M12 9v4" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="9" /></svg>
+                                🆘 SOS Emergency
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Learn">
+                                <svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z" /><path d="M6 11v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5" /></svg>
+                                Learn &amp; Empower
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold" asp-area="" asp-controller="Home" asp-action="Tracker">
+                                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M3 9h18" /><path d="M8 2v4M16 2v4" /></svg>
+                                🌸 Period Tracker
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-accent fw-bold" asp-area="" asp-controller="Emergency" asp-action="NGODashboard">
+                                <svg viewBox="0 0 24 24"><path d="M3 21V9M10 21V3M17 21v-7" /></svg>
+                                NGO Hub
+                            </a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - FreeFlow - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Glowing Footer -->
+    <footer class="border-top footer">
+        <div class="container text-center">
+            <span>Made with <span class="footer-mark">💖 care</span> for girls | FreeFlow &copy; 2026</span>
+            <span class="mx-2">|</span>
+            <small>✨ You are strong. You are brave. You are never alone. ✨</small>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="float-end">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -22,6 +22,15 @@ namespace FreeFlow.Controllers
         {
             return View();
         }
+        public IActionResult Learn()
+        {
+            return View();
+        }
+        public IActionResult Tracker()
+        {
+            // Returns the standalone tracker page or partial view
+            return View("_PeriodTrackerPartial");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,0 +1,315 @@
+﻿@* Views/Home/_PeriodTrackerPartial.cshtml *@
+
+<style>
+  
+    @@keyframes neon-glow-pink {
+        0%, 100%
+
+    {
+        box-shadow: 0 0 20px rgba(255, 42, 133, 0.35), 0 0 40px rgba(168, 85, 247, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(255, 42, 133, 0.55), 0 0 50px rgba(168, 85, 247, 0.3);
+    }
+
+    }
+
+    .tracker-card {
+        background: linear-gradient(145deg, #251333, #381545);
+        border-radius: 24px;
+        border: 2px solid rgba(244, 114, 182, 0.4);
+        animation: neon-glow-pink 4s infinite ease-in-out;
+        color: #fce7f3;
+        backdrop-filter: blur(10px);
+    }
+
+    .premium-card {
+        background: linear-gradient(135deg, #32123d 0%, #4a155c 100%);
+        border-radius: 24px;
+        border: 2px solid #ff2a85;
+        box-shadow: 0 0 25px rgba(255, 42, 133, 0.4);
+        color: #fce7f3;
+    }
+
+    /* Calendar Grid Styling */
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+        text-align: center;
+    }
+
+    .cal-day-header {
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: #f472b6;
+        padding-bottom: 4px;
+        text-shadow: 0 0 8px rgba(244, 114, 182, 0.6);
+    }
+
+    .cal-date {
+        padding: 8px 0;
+        font-size: 0.85rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #fbcfe8;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(244, 114, 182, 0.15);
+    }
+
+        .cal-date:hover {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: #ff75c3;
+            color: #ffffff;
+            transform: scale(1.1);
+            box-shadow: 0 0 12px rgba(255, 117, 195, 0.6);
+        }
+
+        .cal-date.empty {
+            background: transparent;
+            border-color: transparent;
+            cursor: default;
+        }
+
+        /* Calendar Event Highlights */
+        .cal-date.selected-start {
+            background: linear-gradient(135deg, #ff2a85, #ec4899) !important;
+            color: white !important;
+            font-weight: bold;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 18px rgba(255, 42, 133, 0.9) !important;
+            transform: scale(1.05);
+        }
+
+        .cal-date.predicted-period {
+            background: rgba(244, 114, 182, 0.35) !important;
+            color: #ffffff !important;
+            font-weight: bold;
+            border-color: #f472b6 !important;
+            box-shadow: 0 0 10px rgba(244, 114, 182, 0.5) !important;
+        }
+
+        .cal-date.fertile-window {
+            background: rgba(168, 85, 247, 0.35) !important;
+            color: #ffffff !important;
+            font-weight: bold;
+            border-color: #c084fc !important;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5) !important;
+        }
+
+    .legend-dot {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .btn-xs {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    /* Lighted Custom Checkboxes for Symptoms */
+    .symptom-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(244, 114, 182, 0.3);
+        color: #fbcfe8;
+        transition: all 0.25s ease;
+    }
+
+    .btn-check:checked + .symptom-btn {
+        background: linear-gradient(135deg, #ff2a85, #a855f7) !important;
+        color: #ffffff !important;
+        border-color: #ffffff !important;
+        box-shadow: 0 0 15px rgba(255, 42, 133, 0.8) !important;
+    }
+
+    .extra-small {
+        font-size: 0.75rem;
+    }
+</style>
+
+<!-- Side-View Visual Calendar Period Tracker -->
+<div class="tracker-card p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="fw-bold mb-0 text-white" style="text-shadow: 0 0 10px #f472b6;">📅 Interactive Calendar</h5>
+        <span class="badge bg-success rounded-pill px-3 py-1 shadow-sm">Free Tool ✨</span>
+    </div>
+    <p class="text-pink-light small mb-3 opacity-75">Tap the date your last period started on the calendar:</p>
+
+    <!-- Calendar Month Navigation -->
+    <div class="calendar-header">
+        <button type="button" class="btn btn-outline-light btn-xs rounded-circle" onclick="changeMonth(-1)">❮</button>
+        <span id="calendarMonthLabel" class="fw-bold text-white small" style="letter-spacing: 0.5px;"></span>
+        <button type="button" class="btn btn-outline-light btn-xs rounded-circle" onclick="changeMonth(1)">❯</button>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="calendar-grid mb-2">
+        <div class="cal-day-header">Su</div>
+        <div class="cal-day-header">Mo</div>
+        <div class="cal-day-header">Tu</div>
+        <div class="cal-day-header">We</div>
+        <div class="cal-day-header">Th</div>
+        <div class="cal-day-header">Fr</div>
+        <div class="cal-day-header">Sa</div>
+    </div>
+    <div id="calendarDatesGrid" class="calendar-grid mb-3">
+        <!-- Rendered via Javascript -->
+    </div>
+
+    <!-- Calendar Color Key Legend -->
+    <div class="d-flex justify-content-around small mb-3 p-2 rounded-3" style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(244, 114, 182, 0.2);">
+        <div><span class="legend-dot" style="background:#ff2a85; box-shadow: 0 0 8px #ff2a85;"></span> <span class="extra-small text-pink-light">Start</span></div>
+        <div><span class="legend-dot" style="background:#f472b6; box-shadow: 0 0 8px #f472b6;"></span> <span class="extra-small text-pink-light">Next Period</span></div>
+        <div><span class="legend-dot" style="background:#c084fc; box-shadow: 0 0 8px #c084fc;"></span> <span class="extra-small text-pink-light">Fertile</span></div>
+    </div>
+
+    <!-- Interactive Symptoms (Clickable Badges) -->
+    <div class="mb-3">
+        <label class="form-label fw-bold text-white small">Select today's symptoms:</label>
+        <div class="d-flex flex-wrap gap-2">
+            <input type="checkbox" class="btn-check" id="sympCramps" onchange="updateSymptomFeedback()">
+            <label class="btn symptom-btn btn-xs rounded-pill" for="sympCramps">⚡ Cramps</label>
+
+            <input type="checkbox" class="btn-check" id="sympBloating" onchange="updateSymptomFeedback()">
+            <label class="btn symptom-btn btn-xs rounded-pill" for="sympBloating">🎈 Bloating</label>
+
+            <input type="checkbox" class="btn-check" id="sympMood" onchange="updateSymptomFeedback()">
+            <label class="btn symptom-btn btn-xs rounded-pill" for="sympMood">🌧️ Mood</label>
+
+            <input type="checkbox" class="btn-check" id="sympFatigue" onchange="updateSymptomFeedback()">
+            <label class="btn symptom-btn btn-xs rounded-pill" for="sympFatigue">😴 Fatigue</label>
+        </div>
+    </div>
+
+    <!-- Real-time Feedback Box -->
+    <div id="trackerResults" class="p-3 rounded-3" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(244, 114, 182, 0.3);">
+        <h6 class="fw-bold text-white mb-1 small" style="text-shadow: 0 0 5px #f472b6;">💡 Personal Care Tip:</h6>
+        <p id="symptomFeedback" class="text-pink-light extra-small mb-0">Tap a start date on the calendar above to see predictions.</p>
+    </div>
+</div>
+
+<!-- Premium Upgrade Side Card -->
+<div class="premium-card p-4 text-center">
+    <span class="badge bg-warning text-dark fw-bold mb-2 rounded-pill px-3 py-1" style="box-shadow: 0 0 10px #facc15;">👑 FreeFlow Premium</span>
+    <h5 class="fw-bold text-white mb-1" style="text-shadow: 0 0 10px #ff2a85;">Fertility &amp; Pregnancy</h5>
+    <p class="text-pink-light small mb-3 opacity-90">
+        Get advanced ovulation prediction, conception tracking, and weekly pregnancy milestones.
+    </p>
+    <div class="d-inline-block px-4 py-2 rounded-pill mb-3" style="background: rgba(0, 0, 0, 0.3); border: 1px solid #ff2a85; box-shadow: 0 0 15px rgba(255, 42, 133, 0.3);">
+        <span class="fs-5 fw-bold text-white" style="text-shadow: 0 0 8px #ff2a85;">R30</span> <span class="text-pink-light small">/ month</span>
+    </div>
+    <div>
+        <button onclick="alert('Redirecting to secure payment portal for Premium (R30/pm)...')" class="btn btn-pink btn-sm rounded-pill fw-bold w-100">
+            🌟 Unlock for R30/pm
+        </button>
+    </div>
+</div>
+
+<script>
+    let currentDate = new Date();
+    let selectedStartDate = null;
+    const standardCycleLength = 28; // Standard cycle default
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCalendar();
+    });
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendarDatesGrid');
+        const monthLabel = document.getElementById('calendarMonthLabel');
+        grid.innerHTML = '';
+
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        monthLabel.innerText = `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Empty spacer slots before 1st of month
+        for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'cal-date empty';
+            grid.appendChild(emptyCell);
+        }
+
+        // Days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateCell = document.createElement('div');
+            dateCell.className = 'cal-date';
+            dateCell.innerText = day;
+
+            const cellDate = new Date(year, month, day);
+
+            // Highlight status if start date is chosen
+            if (selectedStartDate) {
+                const timeDiff = cellDate.getTime() - selectedStartDate.getTime();
+                const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+
+                if (dayDiff === 0) {
+                    dateCell.classList.add('selected-start');
+                } else if (dayDiff === standardCycleLength || (dayDiff > standardCycleLength && dayDiff < standardCycleLength + 5)) {
+                    dateCell.classList.add('predicted-period');
+                } else if (dayDiff >= standardCycleLength - 16 && dayDiff <= standardCycleLength - 12) {
+                    dateCell.classList.add('fertile-window');
+                }
+            }
+
+            dateCell.onclick = () => selectStartDate(cellDate);
+            grid.appendChild(dateCell);
+        }
+    }
+
+    function changeMonth(direction) {
+        currentDate.setMonth(currentDate.getMonth() + direction);
+        renderCalendar();
+    }
+
+    function selectStartDate(date) {
+        selectedStartDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        renderCalendar();
+        updateSymptomFeedback();
+    }
+
+    function updateSymptomFeedback() {
+        const feedbackElem = document.getElementById('symptomFeedback');
+        let feedback = [];
+
+        if (document.getElementById('sympCramps').checked) {
+            feedback.push("Apply a warm heating pad to your stomach and drink warm tea.");
+        }
+        if (document.getElementById('sympBloating').checked) {
+            feedback.push("Stay well hydrated with water and reduce salt intake.");
+        }
+        if (document.getElementById('sympMood').checked) {
+            feedback.push("Take gentle walks and get plenty of rest.");
+        }
+        if (document.getElementById('sympFatigue').checked) {
+            feedback.push("Ensure iron-rich meals and aim for 8 hours of sleep.");
+        }
+
+        if (feedback.length === 0) {
+            if (selectedStartDate) {
+                feedback.push("Start date recorded! Your estimated next cycle and fertile window are now highlighted on the calendar above.");
+            } else {
+                feedback.push("Tap a start date on the calendar above to see predictions.");
+            }
+        }
+
+        feedbackElem.innerText = feedback.join(" ");
+    }
+</script>
